@@ -12,7 +12,7 @@ Common chars to be blocked or filtered are
 ```
 
 To be still able to deploy a working shell there are a few things we need to do.
-At first there are already non-alphanumeric sherlls out in the wild but the ones i have seen had one thing in common they needed Quotation marks to create a string once to craft letters out of it.
+At first there are already non-alphanumeric shells out in the wild but the ones i have seen had one thing in common they needed Quotation marks to create a string once to craft letters out of it.
 
 So I thought to myself, that it would be a quite cool idea to develope a shell which could avoid that and still work the same way.
 Thats the first Solution i came up with:
@@ -76,3 +76,7 @@ With this setup we can run any function with as much arguments as we like.
 ```bash
 curl https://host.ctf.com/shell.php -X POST -F "0=print_r" -F "1=call_user_func_array" -F "2=file_put_contents" -F "3[]=hello.txt" -F "3[]=testcontent"
 ```
+
+
+Cli-Ish over and out.
+PS: Checkout our cool team page https://pwnprophecy.tk)
