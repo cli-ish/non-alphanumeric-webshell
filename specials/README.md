@@ -14,3 +14,31 @@ payload `Length` and at the `Needed Chars`.
 
 With the version `without dollar signs` you can add more text to the args of system since its more compact but requires
 initially more length. I recommend using this when your arg is longer than `10` chars.
+
+## Extend
+
+I can add different bypasses if requested, not everything is possible to bypass but i will try my best.
+
+Just create a issue with the following format (Example):
+
+```
+Title: Extend specials with xxxxx
+=============
+Blacklisted chars: ...
+OR
+Whitelisted chars: ...
+=============
+
+Other context:
+====================
+This needs to work as a standalone php file.
+
+PHP version: 7.4
+
+Existing Bypass?
+...
+```
+
+And i will try to bypass it and add it to the versions.
+
+Pleas do not send me active ctf challenges, i will not add them directly anyway.
