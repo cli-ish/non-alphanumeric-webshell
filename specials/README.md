@@ -1,8 +1,8 @@
 # Special versions
 
 Note the needed chars `<?=>` are only relevant when you are not in php context and need to declare it.
-If you are already in php you can ignore them and use teh shells without it but to be fair I included them in the
-payload length and at the needed chars.
+If you are already in php you can ignore them and use the shells without it but I included them anyway in the
+payload `Length` and at the `Needed Chars`.
 
 ## Length Ranking
 
