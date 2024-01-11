@@ -12,5 +12,5 @@ payload length and at the needed chars.
 | 2    | without dollar signs, brackets, semicolon             | SYSTEM + CHR payload craft | 420    | <?=(9*.+1^2-87)56034>    |
 | 3    | without dollar signs (`join(array_map(chr,[1,2,3]))`) | SYSTEM + CHR payload craft | 452    | <?=(9*.+1^2-87)56034[],; |
 
-With the version `without dollar signs` you can add text to the args of system while the other will dramatically
-increase in size.
+With the version `without dollar signs` you can add more text to the args of system since its more compact but requires
+initially more length. I recommend using this when your arg is longer than `10` chars.
